@@ -1,3 +1,5 @@
+import axios from "axios";
+
 const Tabs = (topics) => {
   // TASK 3
   // ---------------------
@@ -14,23 +16,36 @@ const Tabs = (topics) => {
   // </div>
   //
 
-  const topicsElem = document.createElement('div');
-  const tab1 = document.createElement('div');
-  const tab2 = document.createElement('div');
-  const tab3 = document.createElement('div');
+  const topicsElem = document.createElement('div')
+  topicsElem.classList.add('topics')
 
-  topicsElem.appendChild(tab1);
-  topicsElem.appendChild(tab2);
-  topicsElem.appendChild(tab3);
+  topics.forEach(topic => {
+   const tabDiv = document.createElement('div')
+   tabDiv.classList.add('tab')
+   tabDiv.textContent = topic
 
-  topicsElem.classList.add('.topics');
-  tab1.classList.add('.tab');
-  tab2.classList.add('.tab');
-  tab3.classList.add('.tab');
+   topicsElem.appendChild(tabDiv)
+  })
 
-  tab1.textContent = topics[0];
-  tab2.textContent = topics[1];
-  tab3.textContent = topics[2];
+  // return topicsDiv
+
+  // const topicsElem = document.createElement('div');
+  // const tab1 = document.createElement('div');
+  // const tab2 = document.createElement('div');
+  // const tab3 = document.createElement('div');
+
+  // topicsElem.appendChild(tab1);
+  // topicsElem.appendChild(tab2);
+  // topicsElem.appendChild(tab3);
+
+  // topicsElem.classList.add('.topics');
+  // tab1.classList.add('.tab');
+  // tab2.classList.add('.tab');
+  // tab3.classList.add('.tab');
+
+  // tab1.textContent = topics[0];
+  // tab2.textContent = topics[1];
+  // tab3.textContent = topics[2];
 
   return topicsElem;
 }
@@ -43,6 +58,15 @@ const tabsAppender = (selector) => {
   // Find the array of topics inside the response, and create the tabs using the Tabs component.
   // Append the tabs to the element in the DOM that matches the selector passed to the function.
   //
+
+  axios.get('http://localhost:5000/api/topics')
+  .then(resp => {
+    const entryPoint = document.querySelector(selector);
+    entryPoint.appendChild(Tabs(resp.data.topics))
+  })
+  .catch(error => {
+    console.error(error);
+  })
 }
 
 export { Tabs, tabsAppender }
