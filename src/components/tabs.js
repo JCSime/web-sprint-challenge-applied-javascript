@@ -28,9 +28,9 @@ const Tabs = (topics) => {
   tab2.classList.add('.tab');
   tab3.classList.add('.tab');
 
-  tab1.textContent = topics;
-  tab2.textContent = topics;
-  tab3.textContent = topics;
+  tab1.textContent = topics[0];
+  tab2.textContent = topics[1];
+  tab3.textContent = topics[2];
 
   return topicsElem;
 }
